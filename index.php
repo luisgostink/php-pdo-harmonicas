@@ -11,73 +11,56 @@
     <script src="js/main.js"></script>
 </head>
 <body>
-
-
-
-    <table class="table table-success table-striped">
-            <!-- TABELLENKOPF MIT FELDNAMEN -->
-            <thead>
+        <table class="table table-success table-striped"> 
+          <!-- TABLE HEAD WHT THE FIELD NAMES -->
+        <thead>
                 <tr class="table-dark">
-                    <?php
                  
+                    <?php 
                         require "./include/db.php";
 
-                        //Fall möglich, die Daten von letzten editbook.php-Aufruf aktualisieren.
-                        updateBook($dbConnection);
-                        createBook($dbConnection); 
+                        $sqlStatement = $dbConnection->query("SELECT * FROM `harmonicas`");
 
-                        // Alle Daten tu den Büchen aus der Datenbank auslesen (SELECT)
-                        $sqlStatement = $dbConnection->query("SELECT * FROM `books`");
-
-                        //Den Tabellenkopf vollständig ausgehen
-                        //https://www.php.net/manual/en...
                         $columnCount = $sqlStatement->columnCount();
 
-                        for ($c = 0; $c < $columnCount; $c++) {
-                            //array mit Spalten-Metadaten holen
-                            // URL . . . .
+                        for ($c = 0; $c < $columnCount; $c++){
                             $columnMeta = $sqlStatement->getColumnMeta($c);
-
-                            //Aus den Spalten-Metadaten den Wert für 'name' auslesen und ausgeben
+                            //prettyPrint($columnMeta);
+                            
                             $columnName = $columnMeta['name'];
                             echo "<th>$columnName</th>";
+
                         }
-                        
-                            echo "</tr>";
-                    ?>        
+                    ?>
                 </tr>
-            </thead>
+        </thead>
 
-            <!-- TABELLENZELLEN MIT DATEN -->
-        <tbody>  
-            <?php 
-                // Falls $row === null wird die Bedingung in () von PHP als false interpretiert.
-                // Damit kann die while-Schleife verlassen werden.
+
+        <!-- TABLE CELLS WITH DATA -->
+
+        <tbody>
+            <?php
+                // If $row === null, the condition in () is interpreted as false by PHP.
+                // With this, the while loop can be exited.
                 
-                // ->fetch() holt immer genau eine Tabellenzeile aus der Datenbank.  
-                while ($row = $sqlStatement->fetch(PDO::FETCH_ASSOC)) { //vertical row by row
-                    echo "<tr>";  
+                // ->fetch() always fetches exactly one table row from the database.
 
-                    //Durch den Array hindurch die Angaben zu einem Buch in eine Tabellenzelle ausgeben.
-                    foreach ($row as $columnName => $value) {
-                        if ($columnName === 'title') {
-                            $id = $row['id'];
-                            echo "<td><a href='editbook.php?id=$id'>$value</a></td>";
-                        }
-                        else {  //id, autor, year, etc...
+                while ($row = $sqlStatement->fetch(PDO::FETCH_ASSOC)){ //vertical row by row
+                        echo "<tr>";
+                        
+                //Display the details of a book in a table cell through the array.
+                foreach ($row as $columnName => $value){
                             echo "<td>$value</td>";
-                        }
-                    }
-
-                    echo "</tr>";
-
                 }
 
-            ?>
-        </tbody>
-    </table>    
+                echo "</tr>";
+          }
 
-    <a class="btn btn-primary"type="submit"  href='/createbook.php'>Create New Book</a>
+            ?>
+
+        </tbody>
+        </table>
+
 
 </body>
 </html>
