@@ -36,7 +36,7 @@
             //exit("Achtung: der Identifikator 'id fehlt in der URL."); 
         }
 
-        echo "id = $id<br>"; //DEVONLY
+        echo "id = $id<br>"; // DEVONLY
 
         //Alle Daten (ganze Tabellenzeile) zum Buch mit der erhaltenen $id mit ->query() abfragen.
         $sqlStatement = $dbConnection->query("SELECT * FROM `books` WHERE `id` = $id");

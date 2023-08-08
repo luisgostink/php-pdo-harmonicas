@@ -19,6 +19,8 @@
                     <?php 
                         require "./include/db.php";
 
+                        prettyPrint($_POST);
+
                         $sqlStatement = $dbConnection->query("SELECT * FROM `harmonicas`");
 
                         $columnCount = $sqlStatement->columnCount();
@@ -50,12 +52,16 @@
                         
                 //Display the details of a book in a table cell through the array.
                 foreach ($row as $columnName => $value){
-                            echo "<td>$value</td>";
+                    if ($columnName === 'brand') {
+                        $id = $row['id'];
+                        echo "<td><a href='editharmonicas.php?id=$id'>$value</a></td>";
+                    }
+                    else {  //id, model, type, etc...
+                        echo "<td>$value</td>";
+                    }
                 }
-
-                echo "</tr>";
-          }
-
+            }
+                        echo "</tr>";
             ?>
 
         </tbody>
