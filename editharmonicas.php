@@ -40,7 +40,19 @@
 
     $row = $sqlStatement->fetch(PDO::FETCH_ASSOC);
 
+    function createSelectField($dbConnection, $tableName, $columName) {
+        echo '<select name = "'. $columName.'" id = "'.$columName.'">';
+        
+        $sqlStatement = $dbConnection->query("SELECT * FROM $tableName");
+            while ($selectFields = $sqlStatement->fetch(PDO::FETCH_ASSOC))// fetch the data from the selected brand.  
+            { 
+                echo '<option value="'. $selectFields[$columName].'">'. $selectFields[$columName].'</option>';
 
+            }
+    
+        echo '</select>';
+    }
+         
     ?>
 
         <h1>Edit Harmonicas</h1>
@@ -56,17 +68,33 @@
 
                 <tr>
                     <td>Brand: </td>
-                    <td><input type="text" id="brand" name="brand" value="<?php echo $row['brand'] ?>"></td> 
+                    <td>
+                    
+                    
+                    <?php
+
+                          /*  $sqlStatement = $dbConnection->query("SELECT * FROM `brands`");
+                            while ($selectFields = $sqlStatement->fetch(PDO::FETCH_ASSOC))// fetch the data from the selected brand.  
+                            { 
+                                echo '<option value='. $selectFields['brand'].'>'. $selectFields['brand'].'</option>';
+
+                                // THIS APPLIES TO EVERY FIELD. NOW IS EVERYTHING WRAPPED ON THE function createSelectFields();
+                            } */ 
+
+                            createSelectField($dbConnection, 'brands', 'brand');
+                    ?>
+                   
+                    </td> 
                 </tr>
 
                 <tr>
                     <td>Model: </td>
-                    <td><input type="text" id="model" name="model" value="<?php echo $row['model'] ?>"></td>
+                    <td> <?php createSelectField($dbConnection, 'models', 'model');?> </td>
                 </tr>
 
                 <tr>
                     <td>Type: </td>
-                    <td><input type="text" id="type" name="type" value="<?php echo $row['type'] ?>"></td>
+                    <td> <?php createSelectField($dbConnection, 'types', 'type');?> </td></td>
                 </tr>
 
                 <tr>

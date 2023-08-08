@@ -12,14 +12,14 @@
 </head>
 <body>
         <table class="table table-success table-striped"> 
-          <!-- TABLE HEAD WHT THE FIELD NAMES -->
+          <!-- TABLE HEAD WIHT THE FIELD NAMES -->
         <thead>
                 <tr class="table-dark">
                  
                     <?php 
                         require "./include/db.php";
 
-                        prettyPrint($_POST);
+                        //prettyPrint($_POST);
 
                         $sqlStatement = $dbConnection->query("SELECT * FROM `harmonicas`");
 
