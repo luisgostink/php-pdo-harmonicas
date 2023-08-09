@@ -15,4 +15,38 @@ $dbConnection = new PDO("mysql:host=$dbHost;dbname=$dbName;charset=utf8", $dbUse
 // Sets the ErrorMode for WebDevs
 $dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+function updateHarmonicas($dbConnectionParam) {
+    // $_POST auslesen.
+    
+    // prettyPrint($_POST);
+
+    /*if (isset($_POST['deleteID']) && $_POST['deleteID'] > 0){
+        // Delete the book with the associated 'deleteID'.
+        $deleteID = $_POST['deleteID'];
+    
+        // echo "<p>\deleteID = $deleteID</p>"; // DEVONLY
+
+        $sqlStatement = $dbConnectionParam->query("DELETE FROM `books` WHERE `id` = $deleteID");
+        $sqlStatement->execute(); 
+   
+    } */
+    
+    if (isset($_POST['editID'])) {
+        // Buchdaten in der Datenbank aktualisieren
+        $editID = $_POST['editID'];
+        $brand = $_POST['brand'];
+        $model = $_POST['model'];
+        $type = $_POST['type'];
+        
+        $sqlStatement = $dbConnectionParam->query("UPDATE `harmonicas` SET `brand` = '$brand', `model` = '$model', `type` = '$type' WHERE `id` = $editID");
+        $sqlStatement->execute();
+    }
+    else {
+        // Keine weitere aktionen mit der Datenbank. 
+    }
+
+
+}
+
+
 ?>

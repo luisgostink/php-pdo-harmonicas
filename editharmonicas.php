@@ -40,13 +40,19 @@
 
     $row = $sqlStatement->fetch(PDO::FETCH_ASSOC);
 
-    function createSelectField($dbConnection, $tableName, $columName) {
+    function createSelectField($dbConnection, $currentColumn, $tableName, $columName) {
         echo '<select name = "'. $columName.'" id = "'.$columName.'">';
         
         $sqlStatement = $dbConnection->query("SELECT * FROM $tableName");
             while ($selectFields = $sqlStatement->fetch(PDO::FETCH_ASSOC))// fetch the data from the selected brand.  
             { 
-                echo '<option value="'. $selectFields[$columName].'">'. $selectFields[$columName].'</option>';
+                if ($currentColumn == $selectFields[$columName]){
+                    echo '<option value="'. $selectFields[$columName].'" selected>'. $selectFields[$columName].'</option>';
+                }
+                else{
+                    echo '<option value="'. $selectFields[$columName].'">'. $selectFields[$columName].'</option>';
+                }
+                
 
             }
     
@@ -81,7 +87,7 @@
                                 // THIS APPLIES TO EVERY FIELD. NOW IS EVERYTHING WRAPPED ON THE function createSelectFields();
                             } */ 
 
-                            createSelectField($dbConnection, 'brands', 'brand');
+                            createSelectField($dbConnection, $row['brand'],  'brands', 'brand');
                     ?>
                    
                     </td> 
@@ -89,12 +95,12 @@
 
                 <tr>
                     <td>Model: </td>
-                    <td> <?php createSelectField($dbConnection, 'models', 'model');?> </td>
+                    <td> <?php createSelectField($dbConnection, $row['model'], 'models', 'model');?> </td>
                 </tr>
 
                 <tr>
                     <td>Type: </td>
-                    <td> <?php createSelectField($dbConnection, 'types', 'type');?> </td></td>
+                    <td> <?php createSelectField($dbConnection, $row['type'], 'types', 'type');?> </td></td>
                 </tr>
 
                 <tr>

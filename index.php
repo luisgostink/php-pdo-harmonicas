@@ -19,7 +19,8 @@
                     <?php 
                         require "./include/db.php";
 
-                        //prettyPrint($_POST);
+                        prettyPrint($_POST);
+                        updateHarmonicas($dbConnection);
 
                         $sqlStatement = $dbConnection->query("SELECT * FROM `harmonicas`");
 
